@@ -1,0 +1,9 @@
+2012-11-05 10:47:31 Error: [MissingControllerException] Controller class FeedsController could not be found.
+#0 /var/www/apps/bloggers/webroot/index.php(94): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-11-05 10:47:58 Error: [MissingControllerException] Controller class FeedsController could not be found.
+#0 /var/www/apps/bloggers/webroot/index.php(94): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-11-05 10:48:11 Error: [MissingControllerException] Controller class FeedsController could not be found.
+#0 /var/www/apps/bloggers/webroot/index.php(94): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
