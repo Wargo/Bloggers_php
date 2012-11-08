@@ -61,7 +61,10 @@ class FeedsController extends AppController {
 
 	function feed() {
 		if ($this->data) {
-			$page = $this->data['page'] || 1;
+			$page = $this->data['page'];
+			if (!$page) {
+				$page = 1;
+			}
 			$device_id = $this->data['device_id'];
 
 			$limit = 10;
