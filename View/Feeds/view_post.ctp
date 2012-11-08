@@ -2,13 +2,13 @@
 extract($post);
 echo $this->Html->link(__('Volver', true), array('controller' => 'feeds', 'action' => 'view', $Post['blog_id']));
 
-echo '<h1>' . utf8_decode($Post['title']) . '</h1>';
+echo '<h1>' . $Post['title'] . '</h1>';
 
 echo '<p style="border-top:solid 1px #333; border-bottom:solid 1px #333;">Por ' . $Post['author'] . ', ' . timeago($Post['date']) . '</p>';
 
 echo '<img src="' . $Post['image'] . '" align="left" style="margin-right: 10px; margin-bottom: 1px;" />';
 
-echo '<p style="text-align: justify;">' . utf8_decode($Post['description']) . '</p>';
+echo '<p style="text-align: justify;">' . $Post['description'] . '</p>';
 
 function timeago($datefrom, $dateto = -1) {
 	if ($datefrom <= 0) {
