@@ -4,19 +4,19 @@ class FeedsController extends AppController {
 	var $name = 'Feeds';
 
 	function admin_add($id = null) {
-		if ($this->data) {
+		if ($this->request->data) {
 			if ($id) {
 				$this->Feed->id = $id;
 			} else {
 				$this->Feed->create();
 			}
-			$this->Feed->save($this->data);
+			$this->Feed->save($this->request->data);
 			return $this->redirect('/');
 		}
 
 		if ($id) {
 			$feed = $this->Feed->findById($id);
-			$this->data = $feed;
+			$this->request->data = $feed;
 		}
 
 		$this->set(compact('id'));
@@ -58,8 +58,8 @@ class FeedsController extends AppController {
 	}
 
 	function feed() {
-		if ($this->data) {
-			extract($this->data);
+		if ($this->request->data) {
+			extract($this->request->data);
 			if (!$page) {
 				$page = 1;
 			}
@@ -195,8 +195,8 @@ class FeedsController extends AppController {
 
 	function add() {
 
-		if ($this->data) {
-			extract($this->data);
+		if ($this->request->data) {
+			extract($this->request->data);
 
 			$this->loadModel('Preference');
 			$exists = $this->Preference->find('first', array(
@@ -225,8 +225,8 @@ class FeedsController extends AppController {
 
 	function feeds() {
 
-		if ($this->data) {
-			extract($this->data);
+		if ($this->request->data) {
+			extract($this->request->data);
 			$feeds = $this->Feed->find('all', array(
 				'conditions' => array(
 					'active' => 1
