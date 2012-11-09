@@ -237,18 +237,19 @@ class FeedsController extends AppController {
 			
 			$this->loadModel('Preference');
 			foreach ($feeds as $feed) {
+				extract($feed);
 				$haveIt = $this->Preference->find('first', array(
 					'conditions' => array(
 						'device_id' => $device_id,
-						'feed_id' => $feed_id,
+						'feed_id' => $Feed['id'],
 					),
 				));
 
 				$return[] = array(
-					'id' => $feed['id'],
-					'name' => $feed['name'],
+					'id' => $Feed['id'],
+					'name' => $Feed['name'],
 					'image' => '/ui/images/feeds.png',
-					'description' => $feed['description'],
+					'description' => $Feed['description'],
 					'haveIt' => $haveIt?true:false
 				);
 			}
