@@ -319,6 +319,8 @@ class FeedsController extends AppController {
 
 	function myposts() {
 
+		$limit = 10;
+
 		if ($this->request->data) {
 
 			extract($this->request->data);
@@ -332,7 +334,7 @@ class FeedsController extends AppController {
 				),
 			));
 
-			$ids = Set::extract('/Favourite/feed_id', $ids);
+			$ids = Set::extract('/Favourite/post_id', $ids);
 
 			$posts = $this->Post->find('all', array(
 				'conditions' => array(
