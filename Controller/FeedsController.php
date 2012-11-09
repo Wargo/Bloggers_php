@@ -278,6 +278,91 @@ class FeedsController extends AppController {
 				echo json_encode(array('status' => 'ok', 'data' => 0)); die;
 			}
 
+		} else {
+			echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
+		}
+
+	}
+
+	function favourites() {
+
+		if ($this->request->data) {
+
+			extract($this->request->data);
+
+			$this->loadModel('Favourite');
+
+			if ($favourite = $this->Favourite->find('first', array(
+					'conditions' => array(
+						'device_id' => $device_id,
+						'post_id' => $id,
+						'blog_id' => $blog_id,
+					),
+				))) {
+				$this->Favourite->delete($favourite['Favourite']['id']);
+				echo json_encode(array('status' => 'ok', 'data' => 0)); die;
+			} else {
+				$this->Favourite->create();
+				$this->Favourite->save(array(
+					'device_id' => $device_id,
+					'post_id' => $id,
+					'blog_id' => $blog_id,
+				));
+				echo json_encode(array('status' => 'ok', 'data' => 1)); die;
+			}
+
+		} else {
+			echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
+		}
+
+	}
+
+	function myposts() {
+
+		if ($this->request->data) {
+
+			extract($this->request->data);
+
+			$this->loadModel('Favourite');
+			$this->loadModel('Post');
+
+			$ids = $this->Favourite->find('all', array(
+				'conditions' => array(
+					'device_id' => $device_id
+				),
+			));
+
+			$ids = Set::extract('/Favourite/feed_id', $ids);
+
+			$posts = $this->Post->find('all', array(
+				'conditions' => array(
+					'id' => $ids
+				),
+				'limit' => $limit,
+				'offset' => ($page - 1) * $limit,
+				'order' => 'date desc'
+			));
+
+			foreach ($posts as $post) {
+				extract($post);
+
+				$return[] = array(
+					'id' => $Post['id'],
+					'blog_id' => $Post['blog_id'],
+					'title' => $Post['title'],
+					'date' => $Post['date'],
+					'author' => $Post['author'],
+					'description' => $Post['description'],
+					'image' => $Post['image'],
+					'md5' => md5($Post['image']),
+				);
+
+			}
+
+			echo json_encode(array('status' => 'ok', 'data' => $return)); die;
+
+		} else {
+			echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
 		}
 
 	}
