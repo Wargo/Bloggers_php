@@ -104,7 +104,7 @@ class FeedsController extends AppController {
 					'description' => $Post['description'],
 					'image' => $Post['image'],
 					'md5' => md5($Post['image']),
-					'url' => 'http://www.familyblog.es/feeds/view_post/' . $post['id'],
+					'url' => 'http://www.familyblog.es/feeds/view_post/' . $Post['id'],
 				);
 			}
 
