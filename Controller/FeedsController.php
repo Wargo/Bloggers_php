@@ -3,7 +3,7 @@ class FeedsController extends AppController {
 
 	var $name = 'Feeds';
 
-	function add($id = null) {
+	function admin_add($id = null) {
 		if ($this->data) {
 			if ($id) {
 				$this->Feed->id = $id;
@@ -57,15 +57,15 @@ class FeedsController extends AppController {
 		$this->set(compact('post'));
 	}
 
-	function prueba() {}
+	function prueba() {
+	}
 
 	function feed() {
 		if ($this->data) {
-			$page = $this->data['page'];
+			extract($this->data);
 			if (!$page) {
 				$page = 1;
 			}
-			$device_id = $this->data['device_id'];
 
 			$limit = 10;
 
@@ -135,13 +135,15 @@ class FeedsController extends AppController {
 					}
 					if (!$image) {
 						$getImage = false;
-						foreach($entry->children($namespaces['media'])->content->attributes() as $key => $value) {
-							if ($key == 'type' && substr($value, 0, 5) == 'image') {
-								$getImage = true;
-							}
-							if ($key == 'url' && $getImage) {
-								$image = $value;
-								$getImage = false;
+						if (!empty($namespaces['media'])) {
+							foreach($entry->children($namespaces['media'])->content->attributes() as $key => $value) {
+								if ($key == 'type' && substr($value, 0, 5) == 'image') {
+									$getImage = true;
+								}
+								if ($key == 'url' && $getImage) {
+									$image = $value;
+									$getImage = false;
+								}
 							}
 						}
 					}
@@ -168,10 +170,10 @@ class FeedsController extends AppController {
 					$to_save = array(
 						'id' => $Feed['id'] . strtotime($entry->pubDate),
 						'blog_id' => $Feed['id'],
-						'title' => str_replace("'", "\'", (string)$entry->title),
+						'title' => $this->clear($entry->title),
 						'date' => strtotime($entry->pubDate),
-						'author' => str_replace("'", "\'", (string)strip_tags($entry->children($namespaces['dc'])->creator)),
-						'description' => str_replace("'", "\'", $description),
+						'author' => $this->clear(strip_tags($entry->children($namespaces['dc'])->creator)),
+						'description' => $this->clear($description),
 						'image' => (string)$image,
 					);
 
@@ -186,6 +188,22 @@ class FeedsController extends AppController {
 
 		}
 		die;
+	}
+
+	function clear($text) {
+		$array1 = array('&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
+		$array2 = array(' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
+		return (string)str_replace($array1, $array2, $text);
+	}
+
+	function add() {
+
+		if ($this->data) {
+			extract($this->data);
+		} else {
+			echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
+		}
+
 	}
 
 }

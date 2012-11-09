@@ -1,6 +1,6 @@
 <?php
 extract($post);
-echo $this->Html->link(__('Volver', true), array('controller' => 'feeds', 'action' => 'view', $Post['blog_id']));
+//echo $this->Html->link(__('Volver', true), array('controller' => 'feeds', 'action' => 'view', $Post['blog_id']));
 
 echo '<h1>' . $Post['title'] . '</h1>';
 
