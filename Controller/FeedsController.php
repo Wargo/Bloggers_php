@@ -93,7 +93,19 @@ class FeedsController extends AppController {
 
 			$return = array();
 			foreach ($feeds as $post) {
-				$return[] = $post['Post'];
+				//$return[] = $post['Post'];
+				extract($post);
+				$return[] = array(
+					'id' => $Post['id'],
+					'blog_id' => $Post['blog_id'],
+					'title' => $Post['title'],
+					'date' => timeago($Post['date']),
+					'author' => $Post['author'],
+					'description' => $Post['description'],
+					'image' => $Post['image'],
+					'md5' => md5($Post['image']),
+					'url' => 'http://www.familyblog.es/feeds/view_post/' . $post['id'],
+				);
 			}
 
 			echo json_encode(array('status' => 'ok', 'data' => $return));
