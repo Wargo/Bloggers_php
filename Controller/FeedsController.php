@@ -260,4 +260,25 @@ class FeedsController extends AppController {
 
 	}
 
+	function isFavorite() {
+
+		if ($this->request->data) {
+
+			extract($this->request->data);
+
+			$this->loadModel('Favourite');
+			if ($this->Favourite->find('first', array(
+					'conditions' => array(
+						'device_id' => $device_id,
+						'post_id' => $id
+					),
+				))) {
+				echo json_encode(array('status' => 'ok', 'data' => 1)); die;
+			} else {
+				echo json_encode(array('status' => 'ok', 'data' => 0)); die;
+			}
+
+		}
+
+	}
 }
