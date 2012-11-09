@@ -197,6 +197,62 @@ class FeedsController extends AppController {
 
 		if ($this->data) {
 			extract($this->data);
+
+			$this->loadModel('Preference');
+			$exists = $this->Preference->find('first', array(
+				'conditions' => array(
+					'device_id' => $device_id,
+					'feed_id' => $feed_id
+				),
+			));
+
+			if ($exists) {
+				$this->Preference->delete($exists['Preference']['id']);
+				echo json_encode(array('status' => 'ok', 'message' => 'Borrado')); die;
+			} else {
+				$this->Preference->create();
+				$this->Preference->save(array(
+					'device_id' => $device_id,
+					'feed_id' => $feed_id,
+				));
+				echo json_encode(array('status' => 'ok', 'message' => 'Insertado')); die;
+			}
+		} else {
+			echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
+		}
+
+	}
+
+	function feeds() {
+
+		if ($this->data) {
+			extract($this->data);
+			$feeds = $this->Feed->find('all', array(
+				'conditions' => array(
+					'active' => 1
+				),
+			));
+
+			$return = array();
+			
+			$this->loadModel('Preference');
+			foreach ($feeds as $feed) {
+				$haveIt = $this->Preference->find('first', array(
+					'conditions' => array(
+						'device_id' => $device_id,
+						'feed_id' => $feed_id,
+					),
+				));
+
+				$return[] = array(
+					'id' => $feed['id'],
+					'name' => $feed['name'],
+					'image' => '/ui/images/feeds.png',
+					'description' => $feed['description'],
+					'haveIt' => $haveIt?true:false
+				);
+			}
+			echo json_encode(array('status' => 'ok', 'data' => $return)); die;
 		} else {
 			echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
 		}
