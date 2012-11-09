@@ -1,4 +1,6 @@
 <?php
+echo $this->Html->image('bg.png', array('style' => 'margin:0 auto; margin-top: 20%; display:block; width:240px;'));
+return;
 $feeds = ClassRegistry::init('Feed')->find('all');
 
 echo '<ul>';

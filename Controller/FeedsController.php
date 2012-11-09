@@ -22,7 +22,7 @@ class FeedsController extends AppController {
 		$this->set(compact('id'));
 	}
 
-	function delete($id = null) {
+	function admin_delete($id = null) {
 		if (empty($id)) {
 			return $this->redirect('/');
 		}
@@ -55,9 +55,6 @@ class FeedsController extends AppController {
 		$post = ClassRegistry::init('Post')->findById($id);
 
 		$this->set(compact('post'));
-	}
-
-	function prueba() {
 	}
 
 	function feed() {
