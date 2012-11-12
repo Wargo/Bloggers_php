@@ -168,7 +168,7 @@ class FeedsController extends AppController {
 						}
 					}
 
-					if ($entry->children($namespaces['content'])->encoded) {
+					if (!empty($namespaces['content']) && $entry->children($namespaces['content'])->encoded) {
 						$description = strip_tags((string)$entry->children($namespaces['content'])->encoded);
 					} elseif (!empty($entry->description)) {
 						$description = strip_tags((string)$entry->description);
@@ -181,7 +181,7 @@ class FeedsController extends AppController {
 						'blog_id' => $Feed['id'],
 						'title' => $this->clear($entry->title),
 						'date' => strtotime($entry->pubDate),
-						'author' => $this->clear(strip_tags($entry->children($namespaces['dc'])->creator)),
+						'author' => !empty($namespaces['dc']) ? $this->clear(strip_tags($entry->children($namespaces['dc'])->creator)) : '',
 						'description' => $this->clear($description),
 						'image' => (string)$image,
 					);
