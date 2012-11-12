@@ -218,6 +218,12 @@ class FeedsController extends AppController {
 				),
 			));
 
+			/*
+			$file = fopen('prueba.txt', 'a');
+			fwrite($file, "\r" . $exists['Preference']['id'] . "\r");
+			fclose($file);
+			*/
+
 			if ($exists) {
 				$this->Preference->delete($exists['Preference']['id']);
 				echo json_encode(array('status' => 'ok', 'message' => 'Borrado')); die;
@@ -369,7 +375,7 @@ class FeedsController extends AppController {
 					'description' => $Post['description'],
 					'image' => $Post['image'],
 					'md5' => md5($Post['image']),
-					);
+				);
 
 			}
 
