@@ -118,14 +118,14 @@ blockquote:before, blockquote:after, q:before, q:after {
  @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400);
  /* Body and Wrapper */
  body {
-	 	background: #eee url(../images/bg.png);
-			font: 13px/18px 'Open Sans', sans-serif;
-				color: #4b4b4b;
-					text-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
-						-webkit-tap-highlight-color: rgba(0,0,0,0);
-							-webkit-font-smoothing: subpixel-antialiased;
-								image-rendering: optimizeQuality;
-									-ms-interpolation-mode: bicubic;
+	background: #eee url(/img/bg_body.png);
+	font: 13px/18px 'Open Sans', sans-serif;
+	color: #4b4b4b;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-font-smoothing: subpixel-antialiased;
+	image-rendering: optimizeQuality;
+	-ms-interpolation-mode: bicubic;
  }
  .wrapper {
 	 	background: #F5F5F5;
@@ -1032,14 +1032,14 @@ blockquote:before, blockquote:after, q:before, q:after {
  @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400);
  /* Body and Wrapper */
  body {
-	 	background: #eee url(../images/bg.png);
-			font: 13px/18px 'Open Sans', sans-serif;
-				color: #4b4b4b;
-					text-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
-						-webkit-tap-highlight-color: rgba(0,0,0,0);
-							-webkit-font-smoothing: subpixel-antialiased;
-								image-rendering: optimizeQuality;
-									-ms-interpolation-mode: bicubic;
+	background: #eee url(/img/bg_body.png);
+	font: 13px/18px 'Open Sans', sans-serif;
+	color: #4b4b4b;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-font-smoothing: subpixel-antialiased;
+	image-rendering: optimizeQuality;
+	-ms-interpolation-mode: bicubic;
  }
  .wrapper {
 	 	background: #F5F5F5;
@@ -1094,6 +1094,16 @@ blockquote:before, blockquote:after, q:before, q:after {
  }
  a:hover {
 	 	text-decoration: underline;
+ }
+ @font-face {
+	font-family: 'BebasNeueRegular';
+	src: url('bebasneue-webfont.eot');
+	src: url('bebasneue-webfont.eot?#iefix') format('embedded-opentype'),
+	url('bebasneue-webfont.woff') format('woff'),
+	url('bebasneue-webfont.ttf') format('truetype'),
+	url('bebasneue-webfont.svg#bebas_neueregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
  }
  header h1 {
 	 	font: 80px/80px 'BebasNeueRegular', sans-serif;

@@ -18,6 +18,7 @@
 <body>
 	<div class="wrapper">
 		<?php echo $this->element('header'); ?>
+		<?php echo $this->element('menu'); ?>
 		<div class="nav-container">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
