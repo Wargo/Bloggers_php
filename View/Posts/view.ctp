@@ -12,5 +12,5 @@ $functions = new FunctionsVendor();
 	}
 	?>
 </blockquote>
-<img src="<?php echo $Post['image']; ?>" class="image left" alt="<?php echo $Post['title']; ?>" />
+<img width="200" src="<?php echo $Post['image']; ?>" class="image left" alt="<?php echo $Post['title']; ?>" />
 <p><?php echo nl2br($Post['description']); ?></p>
