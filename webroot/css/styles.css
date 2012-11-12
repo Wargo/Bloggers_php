@@ -183,10 +183,11 @@ blockquote:before, blockquote:after, q:before, q:after {
  }
  header h1 {
 	 	font: 80px/80px 'BebasNeueRegular', sans-serif;
-			color: #4B257A;
-				text-align: center;
-					margin: 5px 0 10px 0;
-						background: url(/img/logo.png) no-repeat 225px 0;
+		/*color: #4B257A;*/
+		color: #1AB4BD;
+		text-align: center;
+		margin: 5px 0 10px 0;
+		background: url(/img/logo.png) no-repeat 225px 0;
  }
  /* Navigation */
  .sticky {
@@ -1062,10 +1063,10 @@ blockquote:before, blockquote:after, q:before, q:after {
  }
  /* Typography */
  h1, h2, h3, h4, h5, h6 {
-	 	color: #1DB4BD;
-			font-family: 'Open Sans', sans-serif;
-				line-height: normal;
-					font-variant: small-caps;
+	color: #1AB4BD;
+	font-family: 'Open Sans', sans-serif;
+	line-height: normal;
+	font-variant: small-caps;
  }
  h1 {
 	 	font-size: 46px;
@@ -1107,10 +1108,11 @@ blockquote:before, blockquote:after, q:before, q:after {
  }
  header h1 {
 	 	font: 80px/80px 'BebasNeueRegular', sans-serif;
-			color: #4B257A;
-				text-align: center;
-					margin: 5px 0 10px 0;
-						background: url(/img/logo.png) no-repeat 225px 0;
+		color: #1AB4BD;
+		/*color: #4B257A;*/
+		text-align: center;
+		margin: 5px 0 10px 0;
+		background: url(/img/logo.png) no-repeat 225px 0;
  }
  /* Navigation */
  .sticky {
@@ -1390,10 +1392,13 @@ p.box, div.box {
 				padding: 9px 15px;
 }
 blockquote {
-		background: url(../images/content/quote.png) no-repeat 0;
-			padding: 15px 0 15px 50px;
-				font-style: italic;
-					color: #777;
+	background: url(../images/content/quote.png) no-repeat 0;
+	padding: 0px 0 0px 50px;
+	margin: 15px 0 15px 0px;
+	font-style: italic;
+	color: #777;
+	border-top:solid 1px #CCC;
+	border-bottom:solid 1px #CCC;
 }
 /* Buttons */
 a.-button {
