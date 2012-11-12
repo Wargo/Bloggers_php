@@ -12,5 +12,5 @@ $functions = new FunctionsVendor();
 	}
 	?>
 </blockquote>
-<img width="200" src="<?php echo $Post['image']; ?>" class="image left" alt="<?php echo $Post['title']; ?>" />
+<?php echo $this->Html->link('<img width="200" src="' . $Post['image'] . '" class="image left" alt="' . $Post['title'] . '" />', $Post['image'], array('escape' => false, 'target' => '_blank')); ?>
 <p><?php echo nl2br($Post['description']); ?></p>
