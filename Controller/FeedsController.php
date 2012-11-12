@@ -218,14 +218,8 @@ class FeedsController extends AppController {
 				),
 			));
 
-			/*
-			$file = fopen('prueba.txt', 'a');
-			fwrite($file, "\r" . $exists['Preference']['id'] . "\r");
-			fclose($file);
-			*/
-
 			if ($exists) {
-				$this->Preference->delete($exists['Preference']['id']);
+				$this->Preference->deleteAll(array('device_id' => $device_id, 'feed_id' => $feed_id));
 				echo json_encode(array('status' => 'ok', 'message' => 'Borrado')); die;
 			} else {
 				$this->Preference->create();
