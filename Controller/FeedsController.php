@@ -200,9 +200,12 @@ class FeedsController extends AppController {
 	}
 
 	function clear($text) {
+		/*
 		$array1 = array('&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
 		$array2 = array(' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
 		return (string)str_replace($array1, $array2, $text);
+		*/
+		return html_entity_decode((string)$text);
 	}
 
 	function add() {
@@ -450,6 +453,24 @@ class FeedsController extends AppController {
 				break;
 		}
 		return $res;
+	}
+
+	function arreglar() {
+		return;
+		$this->loadModel('Post');
+		$posts = $this->Post->find('all', array('conditions' => array('modified <=' => '2012-11-08 14:37:54')));
+
+		foreach ($posts as $post) {
+			extract($post);
+			$this->Post->id = $Post['id'];
+			$fields = array('description', 'image'); //'title', 
+			foreach ($fields as $field) {
+				$Post[$field] = utf8_decode($Post[$field]);
+				$Post[$field] = html_entity_decode($Post[$field]);
+			}
+			$this->Post->save($Post);
+		}
+		die;
 	}
 
 
