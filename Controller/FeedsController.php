@@ -75,7 +75,7 @@ class FeedsController extends AppController {
 
 			$ids = $this->Preference->find('all', array(
 				'conditions' => array(
-					//'device_id' => $device_id,
+					'device_id' => $device_id,
 					'active' => 1
 				)
 			));
