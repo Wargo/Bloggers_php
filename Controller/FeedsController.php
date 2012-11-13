@@ -60,7 +60,7 @@ class FeedsController extends AppController {
 	function feed() {
 		if ($this->request->data) {
 			extract($this->request->data);
-			if (!$page) {
+			if (empty($page)) {
 				$page = 1;
 			}
 
@@ -75,7 +75,7 @@ class FeedsController extends AppController {
 
 			$ids = $this->Preference->find('all', array(
 				'conditions' => array(
-					'device_id' => $device_id,
+					//'device_id' => $device_id,
 					'active' => 1
 				)
 			));
@@ -96,8 +96,18 @@ class FeedsController extends AppController {
 
 			$return = array();
 			foreach ($feeds as $post) {
-				//$return[] = $post['Post'];
 				extract($post);
+				
+				if (strpos($Post['image'], 'blog.elemb')) {
+
+					$path = 'http://elembarazo.net/wp-content/blogs.dir/9/files/';
+					$image = explode('/', $Post['image']);
+					$image = $path . str_replace('-150x150', '', $image[count($image) - 1]);
+
+				} else {
+					$image = $Post['image'];
+				}
+				
 				$return[] = array(
 					'id' => $Post['id'],
 					'blog_id' => $Post['blog_id'],
@@ -105,7 +115,7 @@ class FeedsController extends AppController {
 					'date' => $functions->timeago($Post['date']),
 					'author' => $Post['author'],
 					'description' => $Post['description'],
-					'image' => $Post['image'],
+					'image' => $image,
 					'md5' => md5($Post['image']),
 					'url' => 'http://www.familyblog.es/posts/view/' . $Post['id'],
 				);
