@@ -57,7 +57,10 @@ class FeedsController extends AppController {
 		$this->set(compact('post'));
 	}
 
-	function feed() {
+	function feed($debug = false) {
+		if ($debug) {
+			$this->request->data['device_id'] = 4859254;
+		}
 		if ($this->request->data) {
 			extract($this->request->data);
 			if (empty($page)) {
@@ -107,6 +110,7 @@ class FeedsController extends AppController {
 
 				} else {
 					$image = $Post['image'];
+					$image_big = $Post['image'];
 				}
 				
 				$return[] = array(
