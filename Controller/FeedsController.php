@@ -131,7 +131,7 @@ class FeedsController extends AppController {
 	function cron() {
 		$feeds = $this->Feed->find('all', array(
 			'conditions' => array(
-				'active' => 1
+				'active' => 1,
 			),
 			'fields' => array('id', 'url')
 		));
@@ -169,6 +169,17 @@ class FeedsController extends AppController {
 							}
 						}
 					}
+					if (!$image) {
+						$getImage = true;
+						foreach ($entry->children($namespaces['media']) as $key => $value) {
+							foreach ($value->attributes() as $k => $v) {
+								if ($k == 'url' && $getImage && strpos((string)$v, 'gravatar') === false) {
+									$getImage = false;
+									$image = (string)$v;
+								}
+							}
+						}
+					}
 					if (!$image && !empty($entry->description)) {
 						$doc = new DOMDocument();
 						$doc->loadHTML($entry->description);
@@ -180,6 +191,7 @@ class FeedsController extends AppController {
 							break;
 						}
 					}
+
 
 					if (!empty($namespaces['content']) && $entry->children($namespaces['content'])->encoded) {
 						$description = strip_tags((string)$entry->children($namespaces['content'])->encoded);
@@ -196,7 +208,7 @@ class FeedsController extends AppController {
 						'date' => strtotime($entry->pubDate),
 						'author' => !empty($namespaces['dc']) ? $this->clear(strip_tags($entry->children($namespaces['dc'])->creator)) : '',
 						'description' => $this->clear($description),
-						'image' => (string)$image,
+						'image' => utf8_decode((string)$image),
 					);
 
 					//$this->Post->id = $Feed['id'] . strtotime($entry->pubDate);
