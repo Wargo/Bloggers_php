@@ -102,6 +102,7 @@ class FeedsController extends AppController {
 
 					$path = 'http://elembarazo.net/wp-content/blogs.dir/9/files/';
 					$image = explode('/', $Post['image']);
+					$image_big = $path . $image[count($image) - 1];
 					$image = $path . str_replace('-150x150', '', $image[count($image) - 1]);
 
 				} else {
@@ -116,6 +117,7 @@ class FeedsController extends AppController {
 					'author' => $Post['author'],
 					'description' => $Post['description'],
 					'image' => $image,
+					'image_big' => $image_big,
 					'md5' => md5($Post['image']),
 					'url' => 'http://www.familyblog.es/posts/view/' . $Post['id'],
 				);
@@ -384,6 +386,8 @@ class FeedsController extends AppController {
 				'offset' => ($page - 1) * $limit,
 				'order' => 'date desc'
 			));
+
+			$return = array();
 
 			foreach ($posts as $post) {
 				extract($post);
