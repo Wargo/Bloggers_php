@@ -28,7 +28,7 @@ class FeedsController extends AppController {
 	}
 
 	function index() {
-		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+		if (false && $_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
 			return $this->redirect('/');
 		}
 	}

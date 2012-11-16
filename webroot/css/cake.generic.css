@@ -23,8 +23,8 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
-	background: #1ab4bd;
+	/*background: #003d4c;*/
+	background: url(/img/bg.png) #1ab4bd no-repeat 50% -100%;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
