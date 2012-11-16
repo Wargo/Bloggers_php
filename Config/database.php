@@ -62,6 +62,17 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'bdfamily',
+		'password' => 'cYT6QXoBSy73',
+		'database' => 'bdfamily',
+		'prefix' => 'bloggers_',
+		'encoding' => 'utf8',
+	);
+
+	public $_default = array(
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
 		'host' => 'servidordeprueba.net',
 		'login' => 'tujilguero',
 		'password' => 'samsung',

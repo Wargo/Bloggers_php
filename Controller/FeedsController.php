@@ -3,7 +3,10 @@ class FeedsController extends AppController {
 
 	var $name = 'Feeds';
 
-	function admin_add($id = null) {
+	function edit($id = null) {
+		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+			return $this->redirect('/');
+		}
 		if ($this->request->data) {
 			if ($id) {
 				$this->Feed->id = $id;
@@ -11,7 +14,7 @@ class FeedsController extends AppController {
 				$this->Feed->create();
 			}
 			$this->Feed->save($this->request->data);
-			return $this->redirect('/');
+			return $this->redirect('/feeds');
 		}
 
 		if ($id) {
@@ -20,9 +23,21 @@ class FeedsController extends AppController {
 		}
 
 		$this->set(compact('id'));
+
+		$this->render('admin_add');
+	}
+
+	function index() {
+		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+			return $this->redirect('/');
+		}
 	}
 
 	function admin_delete($id = null) {
+		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+			return $this->redirect('/');
+		}
+			
 		if (empty($id)) {
 			return $this->redirect('/');
 		}
@@ -150,7 +165,13 @@ class FeedsController extends AppController {
 
 			$x = simplexml_load_file($Feed['url'], 'SimpleXMLElement', LIBXML_NOCDATA);
 
-			foreach ($x->channel->item as $entry) {
+			if (!empty($x->channel)) {
+				$elements = $x->channel->item;
+			} else {
+				$elements = $x->entry;
+			}
+
+			foreach ($elements as $entry) {
 
 				$image = null;
 
@@ -207,13 +228,20 @@ class FeedsController extends AppController {
 						$description = '';
 					}
 
+					if (!empty($entry->id)) {
+						$id = explode('-', $entry->id);
+						$id = $id[count($id) - 1];
+					} else {
+						$id = $Feed['id'] . strtotime($entry->pubDate);
+					}
+
 					$to_save = array(
-						'id' => $Feed['id'] . strtotime($entry->pubDate),
+						'id' => $id,
 						'blog_id' => $Feed['id'],
 						'title' => $this->clear($entry->title),
 						'date' => strtotime($entry->pubDate),
 						'author' => !empty($namespaces['dc']) ? $this->clear(strip_tags($entry->children($namespaces['dc'])->creator)) : '',
-						'description' => $this->clear($description),
+						'description' => !empty($description) ? $this->clear($description) : strip_tags($this->clear($entry->content)),
 						'image' => utf8_decode((string)$image),
 					);
 
@@ -277,6 +305,7 @@ class FeedsController extends AppController {
 				'conditions' => array(
 					'active' => 1
 				),
+				'order' => array('prio' => 'asc')
 			));
 
 			$return = array();
