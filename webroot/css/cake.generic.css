@@ -24,7 +24,7 @@
 /** General Style Info **/
 body {
 	/*background: #003d4c;*/
-	background: url(/img/bg.png) #1ab4bd no-repeat 50% -100%;
+	background: url(/img/bg.png) #1ab4bd no-repeat 50% 180px;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
