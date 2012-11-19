@@ -1,31 +1,48 @@
 <?php
-/**
- * AppShell file
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 2.0
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
-App::uses('Shell', 'Console');
-
-/**
- * Application Shell
- *
- * Add your application-wide methods in the class below, your shells
- * will inherit them.
- *
- * @package       app.Console.Command
- */
 class AppShell extends Shell {
 
+	protected $_version = '1.0';
+
+	public function startup() {
+		$this->_name = strtolower(str_replace('Shell', '', $this->name));
+	}
+
+	public function main () {
+		$this->help();
+	}
+
+	public function help () {
+		$exclude = array('main');
+		$shell = get_class_methods('Shell');
+		$methods = get_class_methods($this);
+		$methods = array_diff($methods, $shell);
+		$methods = array_diff($methods, $exclude);
+
+		$this->out($this->name . ' Shell. Version ' . $this->_version);
+
+
+		foreach ($methods as $method) {
+			if (!isset($help[$method]) && $method[0] !== '_') {
+				$help[] = $method;
+			}
+		}
+		$help = array_unique($help);
+		sort($help);
+
+		if (!$help) {
+			$help[] = 'example';
+			$help[] = 'another';
+		}
+		$this->out('');
+		$this->out('Any project task which doesn\'t require a browser can be put here');
+		$this->out('');
+		foreach($help as $i => $message) {
+			if (!$i) {
+				$this->out("Usage: cake {$this->_name} $message <options> <args>");
+			} else {
+				$this->out("  or   cake {$this->_name} $message <options> <args>");
+			}
+		}
+		$this->hr();
+	}
 }
