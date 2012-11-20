@@ -5,12 +5,14 @@ class Feed extends AppModel {
 
 		$feeds = $this->find('all', array(
 			'conditions' => array(
-				'active' => 1,
+				//'active' => 1,
+				//'id' => 9
 			),
 			'fields' => array('id', 'url')
 		));
 
-		$this->loadModel('Post');
+		$this->Post = ClassRegistry::init('Post');
+
 
 		foreach ($feeds as $feed) {
 			
@@ -28,7 +30,6 @@ class Feed extends AppModel {
 
 				$image = null;
 
-				try {
 
 					$namespaces = $entry->getNameSpaces(true);
 
@@ -49,7 +50,7 @@ class Feed extends AppModel {
 							}
 						}
 					}
-					if (!$image) {
+					if (!$image && !empty($namespaces['media'])) {
 						$getImage = true;
 						foreach ($entry->children($namespaces['media']) as $key => $value) {
 							foreach ($value->attributes() as $k => $v) {
@@ -101,15 +102,25 @@ class Feed extends AppModel {
 					//$this->Post->id = $Feed['id'] . strtotime($entry->pubDate);
 					$this->Post->save($to_save);
 
-				} catch (Exception $e) {
-					//echo json_encode(array('status' => 'ko', 'message' => 'error en los datos')); die;
-				}
 
 			}
 
 		}
+		//chmod('/var/vhosts/www/familyblog.es/www/apps/live/tmp', 777);
+		exec('chmod -R 777 /var/www/vhosts/familyblog.es/www/apps/live/tmp');
 		die;
+	}
 
+	function clear($text) {
+		$array1 = array('&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
+		$array2 = array(' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
+		$text = str_replace($array1, $array2, $text);
+
+		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;');
+		$array2 = array('', '', '', '', '', '', '');
+		$text = str_replace($array1, $array2, $text);
+		//$text= preg_replace('/&#(\d+);/me',"chr(\\1)",$text);
+		return trim((string)$text);
 	}
 
 }
