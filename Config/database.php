@@ -63,6 +63,7 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
+		'host' => 'familyblog.es',
 		'login' => 'bdfamily',
 		'password' => 'cYT6QXoBSy73',
 		'database' => 'bdfamily',

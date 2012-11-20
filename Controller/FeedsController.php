@@ -63,13 +63,32 @@ class FeedsController extends AppController {
 	}
 
 	function view_post($id = null) {
+		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+			return $this->redirect('/');
+		}
 		if (empty($id)) {
 			return $this->redirect('/');
 		}
 		
-		$post = ClassRegistry::init('Post')->findById($id);
+		$this->data = $post = ClassRegistry::init('Post')->findById($id);
 
 		$this->set(compact('post'));
+	}
+
+	function edit_post($id = null) {
+		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+			return $this->redirect('/');
+		}
+		if (empty($id)) {
+			return $this->redirect('/');
+		}
+
+		if ($this->request->data) {
+			$this->loadModel('Post');
+			$this->Post->id = $id;
+			$this->Post->save($this->data);
+			return $this->redirect($this->referer());
+		}
 	}
 
 	function feed($debug = false) {
