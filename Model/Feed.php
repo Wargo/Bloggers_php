@@ -100,12 +100,16 @@ class Feed extends AppModel {
 
 				if ($post = $this->Post->findById($id)) {
 					if ($post['Post']['rewrite'] == 0) {
+						//$this->out('No guardado ' . $to_save['title']);
+						debug('No guardado ' . $to_save['title']);
 						continue;
 					}
 				}
 
 				//$this->Post->id = $Feed['id'] . strtotime($entry->pubDate);
 				$this->Post->save($to_save);
+				//$this->out('Guardado ' . $to_save['title']);
+				debug('Guardado ' . $to_save['title']);
 
 			}
 
@@ -120,8 +124,8 @@ class Feed extends AppModel {
 		$array2 = array(' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
 		$text = str_replace($array1, $array2, $text);
 
-		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;');
-		$array2 = array('', '', '', '', '', '', '');
+		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;', '&#8217;');
+		$array2 = array('', '', '', '', '', '', '', "'");
 		$text = str_replace($array1, $array2, $text);
 		//$text= preg_replace('/&#(\d+);/me',"chr(\\1)",$text);
 		return trim((string)$text);

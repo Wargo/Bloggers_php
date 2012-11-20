@@ -5,7 +5,7 @@ class FunctionsVendor {
 
 	public function timeago($datefrom, $dateto = -1) {
 		if ($datefrom <= 0) {
-			return "Hace mucho tiempo";
+			return "";
 		}
 		if($dateto==-1) {
 			$dateto = time();
