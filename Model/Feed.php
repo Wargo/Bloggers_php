@@ -6,7 +6,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 9
+				//'id' => 24
 			),
 			'fields' => array('id', 'url')
 		));
@@ -88,14 +88,38 @@ class Feed extends AppModel {
 					$id = $Feed['id'] . strtotime($entry->pubDate);
 				}
 
+				/*
+				 * Autor
+				 */
+				if (!empty($namespaces['dc'])) {
+					$author = $this->clear(strip_tags($entry->children($namespaces['dc'])->creator));
+				} elseif (!empty($entry->author)) {
+					$author = (array)$entry->author;
+					$author = $author['name'];
+				} else {
+					$author = '';
+				}
+
+				/*
+				 * Date
+				 */
+				if (!empty($entry->pubDate)) {
+					$date = strtotime($entry->pubDate);
+				} elseif(!empty($entry->updated)) {
+					$date = strtotime($entry->updated);
+				} else {
+					$date = '';
+				}
+
 				$to_save = array(
 					'id' => $id,
 					'blog_id' => $Feed['id'],
 					'title' => $this->clear($entry->title),
-					'date' => strtotime($entry->pubDate),
-					'author' => !empty($namespaces['dc']) ? $this->clear(strip_tags($entry->children($namespaces['dc'])->creator)) : '',
+					'date' => $date,
+					'author' => $author,
 					'description' => !empty($description) ? $this->clear($description) : strip_tags($this->clear($entry->content)),
 					'image' => utf8_decode((string)$image),
+					'url' => $entry->link,
 				);
 
 				if ($post = $this->Post->findById($id)) {

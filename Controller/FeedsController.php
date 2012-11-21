@@ -95,6 +95,23 @@ class FeedsController extends AppController {
 		}
 	}
 
+	function havefavs($debug = false) {
+		if ($debug) {
+			$this->request->data['device_id'] = 4859254;
+		}
+		if ($this->request->data) {
+			extract($this->request->data);
+			$this->loadModel('Favourite');
+			$num = $this->Favourite->find('count', array(
+				'conditions' => array(
+					'device_id' => $device_id,
+				)
+			));
+			echo json_encode(array('data' => $num)); die;
+		}
+		die;
+	}
+
 	function feed($debug = false) {
 		if ($debug) {
 			$this->request->data['device_id'] = 4859254;
@@ -140,20 +157,22 @@ class FeedsController extends AppController {
 				extract($post);
 				
 				if (strpos($Post['image'], 'blog.elemb')) {
-
 					$path = 'http://elembarazo.net/wp-content/blogs.dir/9/files/';
 					$image = explode('/', $Post['image']);
 					$image_big = $path . $image[count($image) - 1];
 					$image = $path . str_replace('-150x150', '', $image[count($image) - 1]);
-
 				} else {
 					$image = $Post['image'];
 					$image_big = $Post['image'];
 				}
+
+				$blog = $this->Feed->findById($Post['blog_id']);
 				
 				$return[] = array(
 					'id' => $Post['id'],
 					'blog_id' => $Post['blog_id'],
+					'blog_name' => $blog['Feed']['name'],
+					'blog_ico' => 'http://www.familyblog.es/img/feeds/' . $Post['blog_id'] . '.png',
 					'title' => $Post['title'],
 					'date' => $functions->timeago($Post['date']),
 					'author' => $Post['author'],
@@ -162,6 +181,7 @@ class FeedsController extends AppController {
 					'image_big' => $image_big,
 					'md5' => md5($Post['image']),
 					'url' => 'http://www.familyblog.es/posts/view/' . $Post['id'],
+					'original_url' => $Post['url'],
 				);
 			}
 
@@ -333,20 +353,40 @@ class FeedsController extends AppController {
 				'order' => 'date desc'
 			));
 
+			App::import('Vendor', 'FunctionsVendor');
+			$functions = new FunctionsVendor();
+
 			$return = array();
 
 			foreach ($posts as $post) {
 				extract($post);
 
+				if (strpos($Post['image'], 'blog.elemb')) {
+					$path = 'http://elembarazo.net/wp-content/blogs.dir/9/files/';
+					$image = explode('/', $Post['image']);
+					$image_big = $path . $image[count($image) - 1];
+					$image = $path . str_replace('-150x150', '', $image[count($image) - 1]);
+				} else {
+					$image = $Post['image'];
+					$image_big = $Post['image'];
+				}
+
+				$blog = $this->Feed->findById($Post['blog_id']);
+
 				$return[] = array(
 					'id' => $Post['id'],
 					'blog_id' => $Post['blog_id'],
+					'blog_name' => $blog['Feed']['name'],
+					'blog_ico' => 'http://www.familyblog.es/img/feeds/' . $Post['blog_id'] . '.png',
 					'title' => $Post['title'],
-					'date' => $Post['date'],
+					'date' => $functions->timeago($Post['date']),
 					'author' => $Post['author'],
 					'description' => $Post['description'],
 					'image' => $Post['image'],
+					'image_big' => $image_big,
 					'md5' => md5($Post['image']),
+					'url' => 'http://www.familyblog.es/posts/view/' . $Post['id'],
+					'original_url' => $Post['url'],
 				);
 
 			}
