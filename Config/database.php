@@ -63,21 +63,9 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		//'host' => 'familyblog.es',
 		'login' => 'bdfamily',
 		'password' => 'cYT6QXoBSy73',
 		'database' => 'bdfamily',
-		'prefix' => 'bloggers_',
-		'encoding' => 'utf8',
-	);
-
-	public $_default = array(
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'servidordeprueba.net',
-		'login' => 'tujilguero',
-		'password' => 'samsung',
-		'database' => 'tujilguero',
 		'prefix' => 'bloggers_',
 		'encoding' => 'utf8',
 	);
