@@ -230,7 +230,7 @@ class FeedsController extends AppController {
 				if (file_exists(WWW_ROOT . 'img/feeds/' . $Feed['id'] . '.png')) {
 					$image = 'http://www.familyblog.es/img/feeds/' . $Feed['id'] . '.png';
 				} else {
-					$image = '/ui/images/tools.png';
+					$image = 'http://www.familyblog.es/img/feeds/0.png';
 				}
 
 				$return[] = array(
