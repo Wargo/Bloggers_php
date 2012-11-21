@@ -198,8 +198,10 @@ class FeedsController extends AppController {
 
 	}
 
-	function feeds() {
-
+	function feeds($debug = false) {
+		if ($debug) {
+			$this->request->data['device_id'] = 4859254;
+		}
 		if ($this->request->data) {
 			extract($this->request->data);
 			$feeds = $this->Feed->find('all', array(
@@ -221,10 +223,16 @@ class FeedsController extends AppController {
 					),
 				));
 
+				if (file_exists(WWW_ROOT . 'img/feeds/' . $Feed['id'] . '.png')) {
+					$image = 'http://www.familyblog.es/img/feeds/' . $Feed['id'] . '.png';
+				} else {
+					$image = '/ui/images/feeds.png';
+				}
+
 				$return[] = array(
 					'id' => $Feed['id'],
 					'name' => $Feed['name'],
-					'image' => '/ui/images/feeds.png',
+					'image' => $image,
 					'description' => $Feed['description'],
 					'haveIt' => $haveIt?true:false
 				);
