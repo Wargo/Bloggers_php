@@ -13,6 +13,8 @@ echo '<img src="' . $Post['image'] . '" align="left" style="margin-right: 10px; 
 
 echo '<p style="text-align: justify;">' . $Post['description'] . '</p>';
 
+echo '<div style="background-color:#CCC;height:1px; margin:30px 0px;"></div>';
+
 echo $this->Form->create('Post', array('url' => array('controller' => 'feeds', 'action' => 'edit_post', $Post['id'])));
 
 echo $this->Form->inputs(array(

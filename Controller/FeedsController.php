@@ -3,8 +3,12 @@ class FeedsController extends AppController {
 
 	var $name = 'Feeds';
 
+	var $layout = 'editor';
+
+	var $ips = array('84.123.66.33', '127.0.0.1');
+
 	function edit($id = null) {
-		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
 		if ($this->request->data) {
@@ -28,13 +32,13 @@ class FeedsController extends AppController {
 	}
 
 	function index() {
-		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
 	}
 
 	function admin_delete($id = null) {
-		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
 			
@@ -63,7 +67,7 @@ class FeedsController extends AppController {
 	}
 
 	function view_post($id = null) {
-		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
 		if (empty($id)) {
@@ -76,7 +80,7 @@ class FeedsController extends AppController {
 	}
 
 	function edit_post($id = null) {
-		if ($_SERVER['REMOTE_ADDR'] != '84.123.66.33') {
+		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
 		if (empty($id)) {
