@@ -37,17 +37,17 @@ class FeedsController extends AppController {
 		}
 	}
 
-	function admin_delete($id = null) {
+	function delete($id = null) {
 		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
 			
 		if (empty($id)) {
-			return $this->redirect('/');
+			return $this->redirect('/feeds');
 		}
 
 		$this->Feed->delete($id);
-		return $this->redirect('/');
+		return $this->redirect('/feeds');
 	}
 
 	function view($id = null) {
