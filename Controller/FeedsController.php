@@ -167,12 +167,18 @@ class FeedsController extends AppController {
 				}
 
 				$blog = $this->Feed->findById($Post['blog_id']);
+
+				if (file_exists('/var/www/vhosts/familyblog.es/www/apps/live/webroot/img/feeds/' . $Post['blog_id'] . '.png')) {
+					$ico = 'http://www.familyblog.es/img/feeds/' . $Post['blog_id'] . '.png';
+				} else {
+					$ico = 'http://www.familyblog.es/img/feeds/0.png';
+				}
 				
 				$return[] = array(
 					'id' => $Post['id'],
 					'blog_id' => $Post['blog_id'],
 					'blog_name' => $blog['Feed']['name'],
-					'blog_ico' => 'http://www.familyblog.es/img/feeds/' . $Post['blog_id'] . '.png',
+					'blog_ico' => $ico,
 					'title' => $Post['title'],
 					'date' => $functions->timeago($Post['date']),
 					'author' => $Post['author'],
