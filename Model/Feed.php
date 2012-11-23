@@ -144,8 +144,8 @@ class Feed extends AppModel {
 	}
 
 	function clear($text) {
-		$array1 = array('&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
-		$array2 = array(' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
+		$array1 = array('&amp;', '&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
+		$array2 = array('&', ' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
 		$text = str_replace($array1, $array2, $text);
 
 		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;', '&#8217;');
