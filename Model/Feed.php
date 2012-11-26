@@ -6,7 +6,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 24
+				//'id' => 31
 			),
 			'fields' => array('id', 'url')
 		));
@@ -74,9 +74,9 @@ class Feed extends AppModel {
 
 
 				if (!empty($namespaces['content']) && $entry->children($namespaces['content'])->encoded) {
-					$description = strip_tags((string)$entry->children($namespaces['content'])->encoded);
+					$description = (string)$entry->children($namespaces['content'])->encoded;
 				} elseif (!empty($entry->description)) {
-					$description = strip_tags((string)$entry->description);
+					$description = (string)$entry->description;
 				} else {
 					$description = '';
 				}
@@ -111,48 +111,59 @@ class Feed extends AppModel {
 					$date = '';
 				}
 
+				/*
+				 * Enlace
+				 */
+				if (!empty($entry->link)) {
+					$url = $entry->link;
+				} else {
+					foreach ($entry->link as $k => $v) {
+						foreach ($v->attributes() as $key => $value) {
+							if  ($key == 'href') {
+								$url = (string)$value;
+							}
+						}
+					}
+				}
+
 				$to_save = array(
 					'id' => $id,
 					'blog_id' => $Feed['id'],
 					'title' => $this->clear($entry->title),
 					'date' => $date,
 					'author' => $author,
-					'description' => !empty($description) ? $this->clear($description) : strip_tags($this->clear($entry->content)),
+					'description' => !empty($description) ? $this->clear($description) : $this->clear($entry->content),
 					'image' => utf8_decode((string)$image),
-					'url' => $entry->link,
+					'url' => $url,
 				);
 
 				if ($post = $this->Post->findById($id)) {
 					if ($post['Post']['rewrite'] == 0) {
-						//$this->out('No guardado ' . $to_save['title']);
-						debug('No guardado ' . $to_save['title']);
+						//debug('No guardado ' . $to_save['title']);
 						continue;
 					}
 				}
 
-				//$this->Post->id = $Feed['id'] . strtotime($entry->pubDate);
 				$this->Post->save($to_save);
-				//$this->out('Guardado ' . $to_save['title']);
-				debug('Guardado ' . $to_save['title']);
+				//debug('Guardado ' . $to_save['title']);
 
 			}
 
 		}
-		//chmod('/var/vhosts/www/familyblog.es/www/apps/live/tmp', 777);
 		exec('chmod -R 777 /var/www/vhosts/familyblog.es/www/apps/live/tmp');
 		die;
 	}
 
 	function clear($text) {
-		$array1 = array('&amp;', '&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
-		$array2 = array('&', ' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
+		$array1 = array('<br />', '&amp;', '&nbsp;', '&aacute;', '&Aacute;', '&eacute;', '&Eacute;', '&iacute;', '&Iacute;', '&oacute;', '&Oacute;', '&uacute;', '&Uacute;', '&ntilde;', '&Ntilde;');
+		$array2 = array("\r\n", '&', ' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
 		$text = str_replace($array1, $array2, $text);
 
 		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;', '&#8217;');
 		$array2 = array('', '', '', '', '', '', '', "'");
 		$text = str_replace($array1, $array2, $text);
 		//$text= preg_replace('/&#(\d+);/me',"chr(\\1)",$text);
-		return trim((string)$text);
+		return strip_tags(trim((string)$text));
 	}
 
 }

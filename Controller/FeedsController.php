@@ -122,7 +122,7 @@ class FeedsController extends AppController {
 				$page = 1;
 			}
 
-			$limit = 10;
+			$limit = 15;
 
 			$this->loadModel('Preference');
 			$this->loadModel('Post');
