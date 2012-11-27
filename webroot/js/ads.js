@@ -48,13 +48,16 @@ function ads(args) {
 	}
 
 	var overlay = document.createElement('div');
-	overlay.setAttribute('class', prefix + '_overlay');
+	//overlay.setAttribute('class', prefix + '_overlay');
+	overlay.className = prefix + '_overlay';
 
 	var bg = document.createElement('div');
-	bg.setAttribute('class', prefix + '_bg');
+	//bg.setAttribute('class', prefix + '_bg');
+	bg.className = prefix + '_bg';
 
 	var div = document.createElement('div');
-	div.setAttribute('class', prefix + '_div');
+	//div.setAttribute('class', prefix + '_div');
+	div.className = prefix + '_div';
 
 	if (args.url) {
 		div.appendChild(a);
@@ -69,8 +72,8 @@ function ads(args) {
 	}, args.delay);
 
 	var closeButton = document.createElement('a');
-	closeButton.setAttribute('class', prefix + '_close');
-	//closeButton.setAttribute('onclick', 'close()');
+	//closeButton.setAttribute('class', prefix + '_close');
+	closeButton.className = prefix + '_close';
 	closeButton.innerHTML = 'X';
 	bg.appendChild(closeButton);
 

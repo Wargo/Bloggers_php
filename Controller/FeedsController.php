@@ -112,6 +112,10 @@ class FeedsController extends AppController {
 		die;
 	}
 
+	function prueba() {
+		$this->layout = 'default';
+	}
+
 	function feed($debug = false) {
 		if ($debug) {
 			$this->request->data['device_id'] = 4859254;
