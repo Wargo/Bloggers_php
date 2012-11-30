@@ -26,6 +26,8 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+
+	Router::connect('/qr', array('controller' => 'posts', 'action' => 'qr'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */

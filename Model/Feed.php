@@ -6,7 +6,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 31
+				//'id' => 45
 			),
 			'fields' => array('id', 'url')
 		));
@@ -28,9 +28,17 @@ class Feed extends AppModel {
 
 			foreach ($elements as $entry) {
 
-				$image = null;
-
 				$namespaces = $entry->getNameSpaces(true);
+
+				if (!empty($namespaces['content']) && $entry->children($namespaces['content'])->encoded) {
+					$description = (string)$entry->children($namespaces['content'])->encoded;
+				} elseif (!empty($entry->description)) {
+					$description = (string)$entry->description;
+				} else {
+					$description = '';
+				}
+
+				$image = null;
 
 				if (substr($entry->enclosure['type'], 0, 5) == 'image') {
 					$image = $entry->enclosure['url'];
@@ -60,9 +68,9 @@ class Feed extends AppModel {
 						}
 					}
 				}
-				if (!$image && !empty($entry->description)) {
+				if (!$image && !empty($description)) {
 					$doc = new DOMDocument();
-					$doc->loadHTML($entry->description);
+					$doc->loadHTML($description);
 					$xml = simplexml_import_dom($doc);
 					$images = $xml->xpath('//img');
 
@@ -70,15 +78,6 @@ class Feed extends AppModel {
 						$image = $img['src'];
 						break;
 					}
-				}
-
-
-				if (!empty($namespaces['content']) && $entry->children($namespaces['content'])->encoded) {
-					$description = (string)$entry->children($namespaces['content'])->encoded;
-				} elseif (!empty($entry->description)) {
-					$description = (string)$entry->description;
-				} else {
-					$description = '';
 				}
 
 				if (!empty($entry->id)) {
@@ -95,7 +94,11 @@ class Feed extends AppModel {
 					$author = $this->clear(strip_tags($entry->children($namespaces['dc'])->creator));
 				} elseif (!empty($entry->author)) {
 					$author = (array)$entry->author;
-					$author = $author['name'];
+					if (!empty($author['name'])) {
+						$author = $author['name'];
+					} else {
+						$author = '';
+					}
 				} else {
 					$author = '';
 				}
