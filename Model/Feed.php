@@ -6,7 +6,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 45
+				//'id' => 52
 			),
 			'fields' => array('id', 'url')
 		));
@@ -34,9 +34,12 @@ class Feed extends AppModel {
 					$description = (string)$entry->children($namespaces['content'])->encoded;
 				} elseif (!empty($entry->description)) {
 					$description = (string)$entry->description;
+				} elseif (!empty($entry->summary)) {
+					$description = (string)$entry->summary;
 				} else {
 					$description = '';
 				}
+
 
 				$image = null;
 
