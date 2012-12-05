@@ -6,7 +6,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 52
+				'id' => 44
 			),
 			'fields' => array('id', 'url')
 		));
@@ -78,11 +78,16 @@ class Feed extends AppModel {
 					$images = $xml->xpath('//img');
 
 					foreach ($images as $img) {
+						if (strpos($img['src'], 'wordpress.com/b.gif')) {
+							continue;
+						}
+						if ($img['width'] == 1 || $img['height'] == 1) {
+							continue;
+						}
 						$image = $img['src'];
 						break;
 					}
 				}
-
 				if (!empty($entry->id)) {
 					$id = explode('-', $entry->id);
 					$id = $id[count($id) - 1];

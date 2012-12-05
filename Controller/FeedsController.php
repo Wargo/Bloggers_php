@@ -118,7 +118,7 @@ class FeedsController extends AppController {
 
 	function feed($debug = false) {
 		if ($debug) {
-			$this->request->data['device_id'] = 4859254;
+			$this->request->data['device_id'] = 1;//4859254;
 		}
 		if ($this->request->data) {
 			extract($this->request->data);
@@ -135,12 +135,20 @@ class FeedsController extends AppController {
 				'belongsTo' => array('Feed')
 			));
 
-			$ids = $this->Preference->find('all', array(
-				'conditions' => array(
-					'device_id' => $device_id,
-					'active' => 1
-				)
-			));
+			if ($device_id === 1) {
+				$ids = $this->Preference->find('all', array(
+					'conditions' => array(
+						'active' => 1
+					)
+				));
+			} else {
+				$ids = $this->Preference->find('all', array(
+					'conditions' => array(
+						'device_id' => $device_id,
+						'active' => 1
+					)
+				));
+			}
 
 			$ids = Set::extract('/Preference/feed_id', $ids);
 
@@ -148,7 +156,7 @@ class FeedsController extends AppController {
 				'conditions' => array(
 					'blog_id' => $ids,
 				),
-				'limit' => $limit,
+				'limit' => $device_id === 1 ? 0 : $limit,
 				'offset' => ($page - 1) * $limit,
 				'order' => 'date desc'
 			));
@@ -163,8 +171,8 @@ class FeedsController extends AppController {
 				if (strpos($Post['image'], 'blog.elemb')) {
 					$path = 'http://elembarazo.net/wp-content/blogs.dir/9/files/';
 					$image = explode('/', $Post['image']);
-					$image_big = $path . $image[count($image) - 1];
-					$image = $path . str_replace('-150x150', '', $image[count($image) - 1]);
+					$image = $path . $image[count($image) - 1];
+					$image_big = str_replace('-150x150', '', $image);
 				} else {
 					$image = $Post['image'];
 					$image_big = $Post['image'];
