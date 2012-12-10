@@ -6,7 +6,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				'id' => 44
+				//'id' => 44
 			),
 			'fields' => array('id', 'url')
 		));
