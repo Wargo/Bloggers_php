@@ -170,8 +170,8 @@ class Feed extends AppModel {
 		$array2 = array("\r\n", '&', ' ', 'á', 'Á', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'ú', 'Ú', 'ñ', 'Ñ');
 		$text = str_replace($array1, $array2, $text);
 
-		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;', '&#8217;');
-		$array2 = array('', '', '', '', '', '', '', "'");
+		$array1 = array('&#8230;', '&#8594;', '&#8220;', '&#8230;', '&#8221;', '&#039;', '&#160;', '&#8216;', '&#8217;');
+		$array2 = array('', '', '', '', '', '', '', "'", "'");
 		$text = str_replace($array1, $array2, $text);
 		//$text= preg_replace('/&#(\d+);/me',"chr(\\1)",$text);
 		return strip_tags(trim((string)$text));
