@@ -6,13 +6,12 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 44
+				//'id' => 32
 			),
 			'fields' => array('id', 'url')
 		));
 
 		$this->Post = ClassRegistry::init('Post');
-
 
 		foreach ($feeds as $feed) {
 			
@@ -40,6 +39,9 @@ class Feed extends AppModel {
 					$description = '';
 				}
 
+				if (empty($description)) {
+					$description = $entry->content;
+				}
 
 				$image = null;
 
@@ -71,12 +73,12 @@ class Feed extends AppModel {
 						}
 					}
 				}
+
 				if (!$image && !empty($description)) {
 					$doc = new DOMDocument();
 					$doc->loadHTML($description);
 					$xml = simplexml_import_dom($doc);
 					$images = $xml->xpath('//img');
-
 					foreach ($images as $img) {
 						if (strpos($img['src'], 'wordpress.com/b.gif')) {
 							continue;
@@ -88,6 +90,7 @@ class Feed extends AppModel {
 						break;
 					}
 				}
+
 				if (!empty($entry->id)) {
 					$id = explode('-', $entry->id);
 					$id = $id[count($id) - 1];
@@ -143,7 +146,7 @@ class Feed extends AppModel {
 					'title' => $this->clear($entry->title),
 					'date' => $date,
 					'author' => $author,
-					'description' => !empty($description) ? $this->clear($description) : $this->clear($entry->content),
+					'description' => $this->clear($description), //!empty($description) ? $this->clear($description) : $this->clear($entry->content),
 					'image' => utf8_decode((string)$image),
 					'url' => $url,
 				);
