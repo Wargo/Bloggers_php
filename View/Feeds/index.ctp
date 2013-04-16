@@ -7,6 +7,8 @@ foreach ($feeds as $feed) {
 	echo '<li>';
 		echo $Feed['prio'] . ' ' . $this->Html->link($Feed['name'], array('controller' => 'feeds', 'action' => 'view', $Feed['id']));
 		echo ' - ';
+		echo __('Plus') . ': ' . $Feed['plus'];
+		echo ' - ';
 		echo $this->Html->link(__('editar', true), array('controller' => 'feeds', 'action' => 'edit', $Feed['id']));
 		echo ' - ';
 		echo $this->Html->link(__('borrar', true),

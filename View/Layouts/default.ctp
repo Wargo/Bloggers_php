@@ -33,6 +33,7 @@
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<meta name="google-site-verification" content="8XyHkyLcNfZPlZ4ycGLJTaA8nvK9LGGgi6bLSMTL4-I" />
 </head>
 <body>
 	<div id="container">

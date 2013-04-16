@@ -276,7 +276,8 @@ class FeedsController extends AppController {
 					'name' => $Feed['name'],
 					'image' => $image,
 					'description' => $Feed['description'],
-					'haveIt' => $haveIt?true:false
+					'haveIt' => $haveIt?true:false,
+					'plus' => $Feed['plus'],
 				);
 			}
 			echo json_encode(array('status' => 'ok', 'data' => $return)); die;

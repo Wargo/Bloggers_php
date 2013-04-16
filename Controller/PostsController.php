@@ -37,4 +37,30 @@ class PostsController extends AppController {
 		}
 		die;
 	}
+
+	function sitemap() {
+		
+		$this->layout = false;
+
+		$posts = $this->Post->find('all');
+		
+		$this->set(compact('posts'));
+
+		$write = '<?xml version=\'1.0\' encoding=\'UTF-8\'?>';
+		$write .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
+
+		foreach ($posts as $post) {
+			extract($post);
+			$write .= '<url>
+				<loc>http://www.familyblog.es/posts/view/' . $Post['id'] . '</loc>
+				<changefreq>weekly</changefreq>
+			</url>';
+		}
+		$write .= '</urlset>';
+
+		$file = fopen(WWW_ROOT . 'sitemap.xml', 'w');
+		fwrite($file, $write);
+		fclose($file);
+
+	}
 }
