@@ -4,7 +4,17 @@ $feeds = ClassRegistry::init('Feed')->find('all', array('order' => array('prio' 
 echo '<ul>';
 foreach ($feeds as $feed) {
 	extract($feed);
-	echo '<li>';
+	if ($Feed['active'] == 0) {
+		$style = 'text-decoration:line-through;';
+	} else {
+		$style = '';
+	}
+	echo '<li style="margin:5px;' . $style . '">';
+		if (file_exists(WWW_ROOT . 'img/feeds/' . $Feed['id'] . '.png')) {
+			echo $this->Html->image('feeds/' . $Feed['id'] . '.png', array('align' => 'absmiddle', 'style' => 'margin:0px 5px;', 'width' => 50));
+		} else {
+			echo $this->Html->image('logo.png', array('align' => 'absmiddle', 'style' => 'margin:0px 5px;', 'width' => 50));
+		}
 		echo $Feed['prio'] . ' ' . $this->Html->link($Feed['name'], array('controller' => 'feeds', 'action' => 'view', $Feed['id']));
 		echo ' - ';
 		echo __('Plus') . ': ' . $Feed['plus'];

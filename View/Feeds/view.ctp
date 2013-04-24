@@ -1,7 +1,7 @@
 <?php
 extract($feed);
 
-echo $this->Html->link(__('Volver', true), '/');
+echo $this->Html->link(__('Volver', true), '/feeds');
 
 echo '<br />';
 echo '<br />';
