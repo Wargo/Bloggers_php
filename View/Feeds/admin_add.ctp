@@ -19,6 +19,9 @@ echo $this->Form->inputs(array(
 	'prio' => array(
 		'label' => __('Orden', true),
 	),
+	'plus' => array(
+		'label' => __('Tarifa (1 = destacado, 2 = icono + grande, 3 = ponerlo de los primeros)', true),
+	),
 	'active' => array(
 		'label' => __('Activo', true),
 		'type' => 'checkbox'
