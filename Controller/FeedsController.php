@@ -5,7 +5,7 @@ class FeedsController extends AppController {
 
 	var $layout = 'editor';
 
-	var $ips = array('81.202.162.203', '127.0.0.1');
+	var $ips = array('84.123.65.103', '127.0.0.1');
 
 	function edit($id = null) {
 		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
