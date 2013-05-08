@@ -12,7 +12,7 @@ class UsersController extends AppController {
 				)
 			))) {
 				$this->Session->write('admin', true);
-				return $this->redirect('/');
+				return $this->redirect('/feeds');
 			}
 			
 		}
