@@ -32,4 +32,28 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+	function beforeFilter() {
+		
+		if (!empty($this->params['admin'])) {
+
+			if (!$this->Session->read('admin')) {
+				return $this->redirect(array('admin' => false, 'controller' => 'users', 'action' => 'login'));
+			}
+
+			//$this->layout = 'panel';
+
+		}
+
+/*
+ClassRegistry::init('User')->create();
+ClassRegistry::init('User')->save(array(
+	'username' => 'app',
+	'password' => md5('bloggers'),
+	'group' => 'admin'
+));
+*/
+
+	}
+
 }

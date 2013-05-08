@@ -7,7 +7,7 @@ class FeedsController extends AppController {
 
 	var $ips = array('84.123.66.33', '127.0.0.1');
 
-	function edit($id = null) {
+	function admin_edit($id = null) {
 		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
@@ -32,12 +32,13 @@ class FeedsController extends AppController {
 	}
 
 	function index() {
-		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
-			return $this->redirect('/');
-		}
+		return $this->redirect(array('admin' => true));
 	}
 
-	function delete($id = null) {
+	function admin_index() {
+	}
+
+	function admin_delete($id = null) {
 		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
@@ -50,7 +51,7 @@ class FeedsController extends AppController {
 		return $this->redirect('/feeds');
 	}
 
-	function view($id = null) {
+	function admin_view($id = null) {
 		if (empty($id)) {
 			return $this->redirect('/');
 		}
@@ -66,7 +67,7 @@ class FeedsController extends AppController {
 		$this->set(compact('feed', 'posts'));
 	}
 
-	function view_post($id = null) {
+	function admin_view_post($id = null) {
 		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
 			return $this->redirect('/');
 		}
