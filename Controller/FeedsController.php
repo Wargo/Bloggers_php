@@ -5,12 +5,7 @@ class FeedsController extends AppController {
 
 	var $layout = 'editor';
 
-	var $ips = array('84.123.65.103', '127.0.0.1');
-
 	function admin_edit($id = null) {
-		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
-			return $this->redirect('/');
-		}
 		if ($this->request->data) {
 			if ($id) {
 				$this->Feed->id = $id;
@@ -51,10 +46,6 @@ class FeedsController extends AppController {
 	}
 
 	function admin_delete($id = null) {
-		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
-			return $this->redirect('/');
-		}
-			
 		if (empty($id)) {
 			return $this->redirect('/feeds');
 		}
