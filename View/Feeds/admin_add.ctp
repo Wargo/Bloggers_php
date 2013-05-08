@@ -1,6 +1,6 @@
 <?php
 
-echo $this->Form->create('Feed', array('url' => array('controller' => 'feeds', 'action' => 'edit', $id)));
+echo $this->Form->create('Feed', array('type' => 'file', 'url' => array('controller' => 'feeds', 'action' => 'edit', $id)));
 
 echo $this->Form->inputs(array(
 	'fieldset' => false,
@@ -26,7 +26,15 @@ echo $this->Form->inputs(array(
 		'label' => __('Activo', true),
 		'type' => 'checkbox'
 	),
+	'logo' => array(
+		'label' => __('Logo'),
+		'type' => 'file',
+	),
 ));
+
+if ($id) {
+	echo $this->Html->image('feeds/' . $id . '.png');
+}
 
 echo $this->Form->submit(__('Guardar', true));
 echo $this->Html->link(__('cancelar', true), '/feeds');

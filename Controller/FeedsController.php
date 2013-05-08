@@ -5,7 +5,7 @@ class FeedsController extends AppController {
 
 	var $layout = 'editor';
 
-	var $ips = array('84.123.66.33', '127.0.0.1');
+	var $ips = array('84.123.65.103', '127.0.0.1');
 
 	function admin_edit($id = null) {
 		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
@@ -17,7 +17,19 @@ class FeedsController extends AppController {
 			} else {
 				$this->Feed->create();
 			}
+			$logo = $this->request->data['Feed']['logo'];
+			unset($this->request->data['Feed']['logo']);
+
 			$this->Feed->save($this->request->data);
+
+			if (!$id) {
+				$id = $this->Feed->id;
+			}
+
+			if ($logo) {
+				move_uploaded_file($logo['tmp_name'], WWW_ROOT . 'img' . DS . 'feeds' . DS . $id . '.png');
+			}
+
 			return $this->redirect('/feeds');
 		}
 

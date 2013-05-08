@@ -1,3 +1,5 @@
 tmp/*
 subir
 config
+webroot/sitemap.xml
+webroot/feeds/*
