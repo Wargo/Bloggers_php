@@ -5,7 +5,7 @@ class CategoriesController extends AppController {
 
 	function admin_index() {
 
-		$categories = $this->Category->find('all');
+		$categories = $this->Category->find('all', array('order' => array('order' => 'asc')));
 
 		$this->set(compact('categories'));
 
@@ -23,7 +23,7 @@ class CategoriesController extends AppController {
 
 			$this->Category->save($this->request->data);
 
-			return $this->redirect('admin_index');
+			return $this->redirect('index');
 
 		}
 
@@ -31,13 +31,17 @@ class CategoriesController extends AppController {
 			$this->request->data = $this->Category->findById($id);
 		}
 
+		$feeds = ClassRegistry::init('Feed')->find('list', array('order' => array('prio' => 'asc')));
+
+		$this->set(compact('feeds'));
+
 	}
 
 	function admin_delete($id = null) {
 		if ($id) {
 			$this->Category->delete($id);
 		}
-		return $this->redirect('admin_index');
+		return $this->redirect('index');
 	}
 
 }

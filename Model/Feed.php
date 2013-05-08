@@ -1,6 +1,8 @@
 <?php
 class Feed extends AppModel {
 
+	var $hasAndBelongsToMany = array('Category');
+
 	function cron() {
 
 		$feeds = $this->find('all', array(

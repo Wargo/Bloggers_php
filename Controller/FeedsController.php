@@ -33,7 +33,9 @@ class FeedsController extends AppController {
 			$this->request->data = $feed;
 		}
 
-		$this->set(compact('id'));
+		$categories = ClassRegistry::init('Category')->find('list', array('order' => array('order' => 'asc')));
+
+		$this->set(compact('id', 'categories'));
 
 		$this->render('admin_add');
 	}

@@ -3,7 +3,7 @@ echo '<ul>';
 foreach ($categories as $category) {
 	extract($category);
 	echo '<li>';
-		echo $Category['prio'] . ' ' . $this->Html->link($Category['name'], array('controller' => 'feeds', 'action' => 'view', $Category['id']));
+		echo $Category['order'] . ' ' . $this->Html->link($Category['name'], array('controller' => 'feeds', 'action' => 'view', $Category['id']));
 		echo ' - ';
 		echo $this->Html->link(__('editar', true), array('controller' => 'categories', 'action' => 'edit', $Category['id']));
 		echo ' - ';

@@ -738,3 +738,21 @@ pre {
 #url-rewriting-warning {
 	display:none;
 }
+
+ul.menu {
+	background:#000;
+}
+
+ul.menu li {
+	background:#FFF;
+	float: left;
+	display: inline;
+}
+
+ul.menu li a {
+	text-decoration: none;
+}
+ul.menu li a.selected,
+ul.menu li a:hover {
+	text-decoration: underline;
+}

@@ -30,6 +30,11 @@ echo $this->Form->inputs(array(
 		'label' => __('Logo'),
 		'type' => 'file',
 	),
+	'Category' => array(
+		'label' => __('Categoría'),
+		'multiple' => 'checkbox',
+		'options' => $categories,
+	),
 ));
 
 if ($id) {

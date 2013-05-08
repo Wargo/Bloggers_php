@@ -37,7 +37,7 @@
 <body style="background:none;">
 	<div id="container">
 		<div id="header">
-			<h1><?php //echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+			<?php echo $this->element('admin_menu'); ?>
 		</div>
 		<div id="content">
 			<?php echo $this->Session->flash(); ?>
