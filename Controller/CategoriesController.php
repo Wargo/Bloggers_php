@@ -21,7 +21,18 @@ class CategoriesController extends AppController {
 				$this->Category->create();
 			}
 
+			if (empty($this->request->data['Category']['order'])) {
+				$this->request->data['Category']['order'] = 0;
+			}
+
+			$ico = $this->request->data['Category']['ico'];
+			unset($this->request->data['Category']['ico']);
+
 			$this->Category->save($this->request->data);
+
+			if ($ico) {
+				move_uploaded_file($ico['tmp_name'], WWW_ROOT . 'img' . DS . 'categories' . DS . $id . '.png');
+			}
 
 			return $this->redirect('index');
 
@@ -42,6 +53,19 @@ class CategoriesController extends AppController {
 			$this->Category->delete($id);
 		}
 		return $this->redirect('index');
+	}
+
+	function json() {
+
+		$this->layout = false;
+
+		$categories = $this->Category->find('all', array(
+			'conditions' => array('active' => 1),
+			'order' => array('order' => 'asc')
+		));
+
+		$this->set(compact('categories'));
+
 	}
 
 }

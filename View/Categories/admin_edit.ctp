@@ -1,7 +1,9 @@
 <?php
 echo $this->Html->link(__('volver'), array('action' => 'index'));
 
-echo $this->Form->create();
+echo $this->Form->create('Category', array('type' => 'file'));
+
+echo $this->Form->submit(__('Guardar'));
 
 echo $this->Form->inputs(array(
 	'name' => array(
@@ -15,6 +17,10 @@ echo $this->Form->inputs(array(
 	),
 	'order' => array(
 		'label' => __('Orden'),
+	),
+	'ico' => array(
+		'label' => __('Imagen'),
+		'type' => 'file',
 	),
 	'Feed' => array(
 		'label' => __('Blogs'),

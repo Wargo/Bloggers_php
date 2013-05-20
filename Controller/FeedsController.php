@@ -252,10 +252,23 @@ class FeedsController extends AppController {
 		}
 		if ($this->request->data) {
 			extract($this->request->data);
+
+			$conditions = array(
+				'active' => 1
+			);
+
+			if (!empty($category)) {
+				$ids = ClassRegistry::init('CategoriesFeed')->find('list', array(
+					'conditions' => array(
+						'category_id' => $category
+					),
+					'fields' => 'feed_id'
+				));
+				$conditions['id'] = $ids;
+			}
+
 			$feeds = $this->Feed->find('all', array(
-				'conditions' => array(
-					'active' => 1
-				),
+				'conditions' => $conditions,
 				'order' => array('prio' => 'asc')
 			));
 
@@ -277,6 +290,8 @@ class FeedsController extends AppController {
 					$image = 'http://www.familyblog.es/img/feeds/0.png';
 				}
 
+				$num = ClassRegistry::init('Preferences')->find('count', array('conditions' => array('feed_id' => $Feed['id'])));
+
 				$return[] = array(
 					'id' => $Feed['id'],
 					'name' => $Feed['name'],
@@ -284,6 +299,7 @@ class FeedsController extends AppController {
 					'description' => $Feed['description'],
 					'haveIt' => $haveIt?true:false,
 					'plus' => $Feed['plus'],
+					'followers' => sprintf(__n('%s follow', '%s follows', $num), $num),
 				);
 			}
 			echo json_encode(array('status' => 'ok', 'data' => $return)); die;
