@@ -56,6 +56,17 @@ class FeedsController extends AppController {
 		return $this->redirect('/feeds');
 	}
 
+	function admin_delete_post($id = null) {
+		if (empty($id)) {
+			return $this->redirect('/feeds');
+		}
+
+		$this->loadModel('Post');
+		$this->Post->delete($id);
+
+		return $this->redirect($this->referer());
+	}
+
 	function admin_view($id = null) {
 		if (empty($id)) {
 			return $this->redirect('/');
@@ -73,9 +84,6 @@ class FeedsController extends AppController {
 	}
 
 	function admin_view_post($id = null) {
-		if (!in_array($_SERVER['REMOTE_ADDR'], $this->ips)) {
-			return $this->redirect('/');
-		}
 		if (empty($id)) {
 			return $this->redirect('/');
 		}
@@ -158,9 +166,17 @@ class FeedsController extends AppController {
 
 			$ids = Set::extract('/Preference/feed_id', $ids);
 
+			$blocked = array(
+				1551384508805,
+				1551384349724
+			);
+
 			$feeds = $this->Post->find('all', array(
 				'conditions' => array(
 					'blog_id' => $ids,
+					'not' => array(
+						'id' => $blocked,
+					),
 				),
 				'limit' => $device_id === 1 ? 0 : $limit,
 				'offset' => ($page - 1) * $limit,

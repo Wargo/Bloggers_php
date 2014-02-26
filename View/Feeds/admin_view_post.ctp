@@ -19,6 +19,8 @@ if (!empty($Post['url'])) {
 	echo '<p><a target="_blank" href="' . $Post['url'] . '">Ver post original</a></p>';
 }
 
+echo '<p>' . $this->Html->link('Eliminar', array('admin' => true, 'controller' => 'feeds', 'action' => 'delete_post', $Post['id']), array('confirm' => __('Seguro?'))) .'</p>';
+
 echo '<div style="background-color:#CCC;height:1px; margin:30px 0px;"></div>';
 
 echo $this->Form->create('Post', array('url' => array('controller' => 'feeds', 'action' => 'edit_post', $Post['id'])));
