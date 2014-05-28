@@ -132,7 +132,7 @@ class FeedsController extends AppController {
 
 	function feed($debug = false) {
 		if ($debug) {
-			$this->request->data['device_id'] = 1;//4859254;
+			$this->request->data['device_id'] = 6062987;
 		}
 		if ($this->request->data) {
 			extract($this->request->data);

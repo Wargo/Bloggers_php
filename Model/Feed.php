@@ -8,7 +8,7 @@ class Feed extends AppModel {
 		$feeds = $this->find('all', array(
 			'conditions' => array(
 				//'active' => 1,
-				//'id' => 32
+				//'id' => 216
 			),
 			'fields' => array('id', 'url')
 		));
@@ -80,16 +80,35 @@ class Feed extends AppModel {
 					$doc = new DOMDocument();
 					$doc->loadHTML($description);
 					$xml = simplexml_import_dom($doc);
-					$images = $xml->xpath('//img');
-					foreach ($images as $img) {
-						if (strpos($img['src'], 'wordpress.com/b.gif')) {
-							continue;
+					if ($xml) {
+						$images = $xml->xpath('//img');
+						foreach ($images as $img) {
+							$wrong_images = array(
+                                                                'wordpress.com/b.gif',
+                                                                '?d=yIl2AUoC8zA',
+                                                                '?d=qj6IDK7rITs',
+                                                                'http://res3.feedsportal.com/social/twitter.png',
+                                                                'http://res3.feedsportal.com/social/facebook.png',
+                                                                'http://res3.feedsportal.com/social/linkedin.png',
+                                                                'http://res3.feedsportal.com/social/googleplus.png',
+                                                                'http://res3.feedsportal.com/social/email.png',
+                                                                'http://res3.feedsportal.com/creative',
+                                                                'http://res3.feedsportal.com/vidgif',
+                                                                'http://feeds.feedburner.com',
+                                                        );
+                                                        $continue = false;
+                                                        foreach ($wrong_images as $wrong_image) {
+                                                                if (strpos($img['src'], $wrong_image) !== false) {
+                                                                        $continue = true;
+                                                                }
+                                                        }
+                                                        if ($continue) continue; // Image error
+							if ($img['width'] == 1 || $img['height'] == 1) {
+								continue;
+							}
+							$image = $img['src'];
+							break;
 						}
-						if ($img['width'] == 1 || $img['height'] == 1) {
-							continue;
-						}
-						$image = $img['src'];
-						break;
 					}
 				}
 

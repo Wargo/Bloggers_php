@@ -21,9 +21,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title>
-		FamilyBlog - Tu revista de bloggers
-	</title>
+	<title>FamilyBlog - Tu revista de bloggers</title>
 	<?php
 		echo $this->Html->meta('icon');
 
